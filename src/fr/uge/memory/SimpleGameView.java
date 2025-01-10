@@ -61,6 +61,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int height, int width, in
   }
 
   private void drawCell(Graphics2D graphics, SimpleGameData data, int i, int j) {
+    if (!data.isVisible(i, j)) {
+      return;
+    }
     var x = xFromI(i);
     var y = yFromJ(j);
     var animalImage1 = loader.animalImage(data.id(i, j) % 5);
@@ -74,7 +77,6 @@ public record SimpleGameView(int xOrigin, int yOrigin, int height, int width, in
 
     int cellSize = squareSize;
     int imageSize = cellSize / 3;
-
     drawImage(graphics, habitatImage, x + cellSize / 2 + 2, y + 2, imageSize, imageSize);
     drawImage(graphics, animalImage1, x + 2, y + 2, imageSize, imageSize);
 

@@ -3,16 +3,12 @@ package fr.uge.memory;
 import java.util.Random;
 public class SimpleGameData {
 	private final Cell[][] matrix;
-	private Coordinates first;
-	private Coordinates second;
 	private int wins;
 	public SimpleGameData(int nbLines, int nbColumns) {
 		if (nbLines < 0 || nbColumns < 0) {
 			throw new IllegalArgumentException();
 		}
 		matrix = new Cell[nbLines][nbColumns];
-		first = null;
-		second = null;
 		wins = 0;
 		randomise();
 	}
@@ -42,13 +38,15 @@ public class SimpleGameData {
 		return matrix[i][j].secondAnimalId();
 	}
 	public void clickOnCell(int i, int j) {
-		if (i < 0 || columns() <= i || j < 0 || lines() <= j) {
+		if (i < 0 || columns() <= i || j < 0 || lines() <= j || isVisible(i, j)) {
 			return;
 		}
 		System.out.println("Clicked on cell: [" + i + "," +  j + "]");
-		matrix[i][j].show();
 	}
 	public boolean win() {
 		return 2 * wins == lines() * columns();
+	}
+	public boolean isVisible(int i, int j) {
+		return matrix[i][j].visible();
 	}
 }
