@@ -1,4 +1,4 @@
-package fr.uge.memory;
+package fr.uge.prueba;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package fr.uge.memory;
+package fr.uge.prueba;
 
 import java.awt.Color;
 
@@ -47,8 +47,8 @@ public class SimpleGameController {
     var height = screenInfo.height();
     var margin = 50;
 
-    var animalImages = new String[]{"bear.png", "eagle.png", "elk.png", "fox.png", "salmon.png"};
-    var habitatImages = new String[]{"forest.png", "grassland.png", "mountain.png", "river.png", "sea.png"};
+    var animalImages = new String[]{"bear.png", "elk.png", "fox.png", "eagle.png", "salmon.png"};
+    var habitatImages = new String[]{"mountain.png", "forest.png", "river.png", "grassland.png", "wetland.png"};
     var images = new ImageLoader("data", animalImages, habitatImages);
     var data = new SimpleGameData(4, 4);
     var view = SimpleGameView.initGameGraphics(margin, margin, (int) Math.min(width, height) - 2 * margin, data,

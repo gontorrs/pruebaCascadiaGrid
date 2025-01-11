@@ -1,4 +1,4 @@
-package fr.uge.memory;
+package fr.uge.prueba;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -66,23 +66,23 @@ public record SimpleGameView(int xOrigin, int yOrigin, int height, int width, in
     }
     var x = xFromI(i);
     var y = yFromJ(j);
-    var animalImage1 = loader.animalImage(data.id(i, j) % 5);
-    var habitatImage = loader.habitatImage(data.id(i, j) % 5);
+    var animalImage1 = loader.animalImage(data.idAnimal(i, j) % 5);
+    var habitatImage = loader.habitatImage(data.idHabitat(i, j) % 5);
 
-    int secondAnimalId = data.secondAnimalId(i, j);
-    BufferedImage animalImage2 = null;
-    if (secondAnimalId != -1) {
-      animalImage2 = loader.animalImage(secondAnimalId);
-    }
+//    int secondAnimalId = data.secondAnimalId(i, j);
+//    BufferedImage animalImage2 = null;
+//    if (secondAnimalId != -1) {
+//      animalImage2 = loader.animalImage(secondAnimalId);
+//    }
 
     int cellSize = squareSize;
     int imageSize = cellSize / 3;
     drawImage(graphics, habitatImage, x + cellSize / 2 + 2, y + 2, imageSize, imageSize);
     drawImage(graphics, animalImage1, x + 2, y + 2, imageSize, imageSize);
 
-    if (animalImage2 != null) {
-      drawImage(graphics, animalImage2, x + cellSize / 2 + 2, y + imageSize + 4, imageSize, imageSize);
-    }
+//    if (animalImage2 != null) {
+//      drawImage(graphics, animalImage2, x + cellSize / 2 + 2, y + imageSize + 4, imageSize, imageSize);
+//    }
 
     graphics.setColor(Color.BLACK);
     graphics.drawRect((int) x, (int) y, cellSize, cellSize);
