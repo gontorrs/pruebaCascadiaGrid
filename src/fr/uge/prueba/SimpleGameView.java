@@ -61,28 +61,34 @@ public record SimpleGameView(int xOrigin, int yOrigin, int height, int width, in
   }
 
   private void drawCell(Graphics2D graphics, SimpleGameData data, int i, int j) {
-    if (!data.isVisible(i, j)) {
-      return;
-    }
     var x = xFromI(i);
     var y = yFromJ(j);
-    var animalImage1 = loader.animalImage(data.idAnimal(i, j) % 5);
-    var habitatImage = loader.habitatImage(data.idHabitat(i, j) % 5);
+    BufferedImage animalImage1;
+    BufferedImage habitatImage;
 
-//    int secondAnimalId = data.secondAnimalId(i, j);
-//    BufferedImage animalImage2 = null;
-//    if (secondAnimalId != -1) {
-//      animalImage2 = loader.animalImage(secondAnimalId);
-//    }
+    if (!data.isVisible(i, j)) {
+      animalImage1 = loader.animalImage(5); // Assuming 5 is the index for blank.png
+      habitatImage = loader.habitatImage(5);
+    } else {
+      animalImage1 = loader.animalImage(data.idAnimal(i, j) % 5);
+      habitatImage = loader.habitatImage(data.idHabitat(i, j) % 5);
+    }
+
+    int secondAnimalId = data.secondAnimalId(i, j);
+    BufferedImage animalImage2 = null;
+    if (secondAnimalId != -1 && data.isVisible(i, j)) {
+      animalImage2 = loader.animalImage(secondAnimalId);
+    }
 
     int cellSize = squareSize;
     int imageSize = cellSize / 3;
+
     drawImage(graphics, habitatImage, x + cellSize / 2 + 2, y + 2, imageSize, imageSize);
     drawImage(graphics, animalImage1, x + 2, y + 2, imageSize, imageSize);
 
-//    if (animalImage2 != null) {
-//      drawImage(graphics, animalImage2, x + cellSize / 2 + 2, y + imageSize + 4, imageSize, imageSize);
-//    }
+    if (animalImage2 != null) {
+      drawImage(graphics, animalImage2, x + cellSize / 2 + 2, y + imageSize + 4, imageSize, imageSize);
+    }
 
     graphics.setColor(Color.BLACK);
     graphics.drawRect((int) x, (int) y, cellSize, cellSize);

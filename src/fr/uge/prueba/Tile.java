@@ -6,13 +6,16 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public record Tile(List<Animal> animalList, List<Habitat> habitatList, int userTile) {
+public record Tile(List<Animal> animalList, List<Habitat> habitatList, int userTile, Boolean visibility) {
     public Tile {
         Objects.requireNonNull(animalList);
         Objects.requireNonNull(habitatList);
         if (userTile < 0) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("User Tile must be greater than 0.");
         }
+    }
+    public Tile(List<Animal> animalList, List<Habitat> habitatList, int userTile) {
+        this(animalList, habitatList, userTile, false);
     }
 
     private int maxLength(List<String> items) {
@@ -51,31 +54,69 @@ public record Tile(List<Animal> animalList, List<Habitat> habitatList, int userT
                 .collect(Collectors.toList());
         return print(processedItems);
     }
-
-    public static String[] animalToTimage(List<Animal> animals) {
-        String[] imageArray = new String[animals.size()];
-        if (animals.isEmpty()) {
-        	for (int i = 0; i < animals.size(); i++) {
-                imageArray[i] = "blank.png";
-            }
-        }
-        else {
-        	for (int i = 0; i < animals.size(); i++) {
-                imageArray[i] = animals.get(i).name().toLowerCase() + ".png";
-            }
-        }
-        return imageArray;
+    public Tile hide() {
+        return new Tile(this.animalList, this.habitatList, this.userTile, false);
     }
 
-    public static String[] habitatToImage(List<Habitat> habitats) {
-        if (habitats.isEmpty()) {
-            return new String[]{"blank.png"};
-        }
-        String[] imageArray = new String[habitats.size()];
-        for (int i = 0; i < habitats.size(); i++) {
-            imageArray[i] = habitats.get(i).name().toLowerCase() + ".png";
-        }
-        return imageArray;
+    public Tile show() {
+        return new Tile(this.animalList, this.habitatList, this.userTile, true);
     }
 
+    public Boolean visible() {
+        return this.visibility;
+    }
+    public int animalToInt(String animal) {
+        switch(animal.toUpperCase()) {
+            case "BEAR":
+                return 0;
+            case "ELK":
+                return 1;
+            case "FOX":
+                return 2;
+            case "EAGLE":
+                return 3;
+            case "SALMON":
+                return 4;
+            default:
+                return -1;
+        }
+    }
+
+    public int habitatToInt(String habitat) {
+        switch(habitat.toUpperCase()) {
+            case "MOUNTAIN":
+                return 0;
+            case "FOREST":
+                return 1;
+            case "RIVER":
+                return 2;
+            case "GRASSLAND":
+                return 3;
+            case "WETLAND":
+                return 4;
+            default:
+                return -1;
+        }
+    }
+
+
+    public int idAnimal() {
+        if (animalList.isEmpty()) {
+            return 5;
+        }
+    	return animalToInt(animalList.get(0).toString());
+    }
+    public int idHabitat() {
+        if (habitatList.isEmpty()) {
+            return 5;
+        }
+        return habitatToInt(habitatList.get(0).toString());
+    }
+
+    public int secondAnimalId() {
+        if (animalList.size() > 1) {
+            return animalToInt(animalList.get(1).toString());
+        }
+        return -1;
+    }
 }

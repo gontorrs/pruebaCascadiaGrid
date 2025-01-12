@@ -38,7 +38,8 @@ public class ImageLoader {
         return animalImages[id];
     }
 
-    public BufferedImage habitatImage(int id) {
-        return habitatImages[id];
+    public BufferedImage habitatImage(int index) {
+        return habitatImages[index];
     }
+
 }
